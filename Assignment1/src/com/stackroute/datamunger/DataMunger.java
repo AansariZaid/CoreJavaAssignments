@@ -10,7 +10,7 @@ public class DataMunger {
 		DataMunger dataMunger = new DataMunger();
 		Scanner scan = new Scanner(System.in);
 		query = scan.nextLine();
-		dataMunger.parseQuery(query);
+		System.out.println(dataMunger.getGroupByFields("select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' order by city"));
 		scan.close();
 		// call the parseQuery method and pass the queryString variable as a parameter
 
@@ -42,7 +42,7 @@ public class DataMunger {
 	public String getFile(String queryString) {
 		
 		String filename = queryString.split("from")[1].split("\\s+")[1];
-		return null;
+		return filename;
 	}
 	
 	// getting the baseQuery and display
@@ -55,24 +55,25 @@ public class DataMunger {
 	
 	// get and display the where conditions part(if where condition exists)
 	public String getConditionsPartQuery(String queryString) {
-		
 	
-		return null;
+		String conditionsPartQuery = queryString.split("order by")[0].split("group by")[0].split("where")[1];
+		return conditionsPartQuery;
 
 	}
 	
 	/* parse the where conditions and display the propertyName, propertyValue and
 	 conditionalOperator for each conditions*/
 	public String[] getConditions(String queryString) {
-		
 	
-		return null;
+		String conditionsPartQuery = getConditionsPartQuery(queryString);
+		String[] conditions = conditionsPartQuery.trim().split("and|or");	
+		return conditions;
 	}
 	
 	// get the logical operators(applicable only if multiple conditions exist)
 	public String[] getLogicalOperators(String queryString) {
 
-		
+		String conditionsPartQuery = getConditionsPartQuery(queryString);
 		
 		return null;
 		
