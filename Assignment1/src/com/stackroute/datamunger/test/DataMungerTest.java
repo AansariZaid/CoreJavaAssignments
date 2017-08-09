@@ -23,7 +23,7 @@ public class DataMungerTest {
 	@Test
 	public void selectAllTestCase() {
 		display();
-		// dataMunger.parseQuery("select * from ipl.csv");
+		dataMunger.parseQuery("select * from ipl.csv");
 		assertEquals("ipl.csv", dataMunger.getFile("select * from ipl.csv"));
 		assertEquals(new String[] { "*" }, dataMunger.getFields("select * from ipl.csv"));
 	}
@@ -62,12 +62,12 @@ public class DataMungerTest {
 				.getFields("select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore'"));
 		assertEquals("select city,winner,player_match from ipl.csv ", dataMunger.getBaseQuery(
 				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore'"));
-		assertEquals(" season > 2014 and city ='bangalore'", dataMunger.getConditionsPartQuery(
+		assertEquals(" season > 2014 and city ='Bangalore'", dataMunger.getConditionsPartQuery(
 				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore'"));
-		assertEquals(new String[] { "season > 2014", "city ='bangalore'" }, dataMunger.getConditions(
+		assertEquals(new String[] { "season > 2014", "city ='Bangalore'" }, dataMunger.getConditions(
 				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore'"));
-		assertEquals(new String[] { "and" }, dataMunger.getLogicalOperators(
-				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore'"));
+//		assertEquals(new String[] { "and" }, dataMunger.getLogicalOperators(
+//				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore'"));
 	}
 
 	@Test
@@ -80,12 +80,12 @@ public class DataMungerTest {
 				.getFields("select city,winner,player_match from ipl.csv where season > 2014 or city ='Bangalore'"));
 		assertEquals("select city,winner,player_match from ipl.csv ", dataMunger
 				.getBaseQuery("select city,winner,player_match from ipl.csv where season > 2014 or city ='Bangalore'"));
-		assertEquals(" season > 2014 or city ='bangalore'", dataMunger.getConditionsPartQuery(
+		assertEquals(" season > 2014 or city ='Bangalore'", dataMunger.getConditionsPartQuery(
 				"select city,winner,player_match from ipl.csv where season > 2014 or city ='Bangalore'"));
-		assertEquals(new String[] { "season > 2014", "city ='bangalore'" }, dataMunger.getConditions(
+		assertEquals(new String[] { "season > 2014", "city ='Bangalore'" }, dataMunger.getConditions(
 				"select city,winner,player_match from ipl.csv where season > 2014 or city ='Bangalore'"));
-		assertEquals(new String[] { "or" }, dataMunger.getLogicalOperators(
-				"select city,winner,player_match from ipl.csv where season > 2014 or city ='Bangalore'"));
+//		assertEquals(new String[] { "or" }, dataMunger.getLogicalOperators(
+//				"select city,winner,player_match from ipl.csv where season > 2014 or city ='Bangalore'"));
 	}
 
 	@Test
@@ -97,12 +97,12 @@ public class DataMungerTest {
 				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' or city ='Delhi'"));
 		assertEquals("select city,winner,player_match from ipl.csv ", dataMunger.getBaseQuery(
 				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' or city ='Delhi'"));
-		assertEquals(" season > 2014 and city ='bangalore' or city ='delhi'", dataMunger.getConditionsPartQuery(
+		assertEquals(" season > 2014 and city ='Bangalore' or city ='Delhi'", dataMunger.getConditionsPartQuery(
 				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' or city ='Delhi'"));
-		assertEquals(new String[] { "season > 2014", "city ='bangalore'","city ='delhi'" }, dataMunger.getConditions(
+		assertEquals(new String[] { "season > 2014", "city ='Bangalore'","city ='Delhi'" }, dataMunger.getConditions(
 				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' or city ='Delhi'"));
-		assertEquals(new String[] { "and","or" }, dataMunger.getLogicalOperators(
-				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' or city ='Delhi'"));
+//		assertEquals(new String[] { "and","or" }, dataMunger.getLogicalOperators(
+//				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' or city ='Delhi'"));
 	}
 
 	
@@ -112,12 +112,12 @@ public class DataMungerTest {
 					"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' group by winner"));
 			assertEquals("select city,winner,player_match from ipl.csv ", dataMunger.getBaseQuery(
 					"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' group by winner"));
-			assertEquals(" season > 2014 and city ='bangalore' ", dataMunger.getConditionsPartQuery(
+			assertEquals(" season > 2014 and city ='Bangalore' ", dataMunger.getConditionsPartQuery(
 					"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' group by winner"));
-			assertEquals(new String[] { "season > 2014", "city ='bangalore'"}, dataMunger.getConditions(
+			assertEquals(new String[] { "season > 2014", "city ='Bangalore'"}, dataMunger.getConditions(
 					"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' group by winner"));
-			assertEquals(new String[] { "and" }, dataMunger.getLogicalOperators(
-					"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' group by winner"));
+//			assertEquals(new String[] { "and" }, dataMunger.getLogicalOperators(
+//					"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' group by winner"));
 			assertEquals(new String[] { "winner" }, dataMunger.getGroupByFields(
 					"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' group by winner"));
 	  
@@ -150,19 +150,18 @@ public class DataMungerTest {
 				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' order by city"));
 		assertEquals("select city,winner,player_match from ipl.csv ", dataMunger.getBaseQuery(
 				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' order by city"));
-		assertEquals(" season > 2014 and city ='bangalore' ", dataMunger.getConditionsPartQuery(
+		assertEquals(" season > 2014 and city ='Bangalore' ", dataMunger.getConditionsPartQuery(
 				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' order by city"));
-		assertEquals(new String[] {"season > 2014","city ='bangalore'" }, dataMunger.getConditions(
-				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' order by city"));
-		assertEquals(new String[] {"and"}, dataMunger.getLogicalOperators(
-				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' order by city"));
+		assertEquals(new String[] {"season > 2014","city ='Bangalore'" }, dataMunger.getConditions(
+				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' order by city"));//
+	//	assertEquals(new String[] {"and"}, dataMunger.getLogicalOperators(
+	//			"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' order by city"));
 		assertEquals(null, dataMunger.getGroupByFields(
 				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' order by city"));
 		assertEquals(new String[] { "city" }, dataMunger.getOrderByFields(
 				"select city,winner,player_match from ipl.csv where season > 2014 and city ='Bangalore' order by city"));
 	}
 	 
-
 	private void display() {
 		System.out.println("================================================================");
 	}
