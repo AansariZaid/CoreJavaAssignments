@@ -10,6 +10,7 @@ public class DataMunger {
 		DataMunger dataMunger = new DataMunger();
 		Scanner scan = new Scanner(System.in);
 		query = scan.nextLine();
+
 		scan.close();
 		// call the parseQuery method and pass the queryString variable as a
 		// parameter
@@ -19,8 +20,8 @@ public class DataMunger {
 	public void parseQuery(String queryString) {
 		// call the methods
 		/*
-		 * Code review: as per the problem statement, it should print the values, but none of these
-		 * methods are printing anything
+		 * Code review: as per the problem statement, it should print the
+		 * values, but none of these methods are printing anything
 		 */
 		getSplitStrings(queryString);
 		getFile(queryString);
@@ -37,7 +38,10 @@ public class DataMunger {
 	// parse the queryString into words and display
 	public String[] getSplitStrings(String queryString) {
 
-		String[] words = queryString.split("\\w");
+		String[] words = queryString.split("[\\s,]+");
+
+		for (String word : words)
+			System.out.print(word + " | ");
 		return words;
 	}
 
@@ -45,13 +49,14 @@ public class DataMunger {
 	public String getFile(String queryString) {
 
 		String filename = queryString.split("from")[1].split("\\s+")[1];
+		System.out.println(filename);
 		return filename;
 	}
 
 	// getting the baseQuery and display
 	public String getBaseQuery(String queryString) {
 
-		String baseQuery = queryString.split("where")[0].split("group by")[0].split("order by")[0];
+		String baseQuery = queryString.split("where")[0];
 		return baseQuery;
 
 	}
@@ -61,22 +66,24 @@ public class DataMunger {
 
 		if (queryString.contains("where")) {
 			String conditionsPartQuery = queryString.split("order by")[0].split("group by")[0].split("where")[1];
+			System.out.println(conditionsPartQuery);
 			return conditionsPartQuery;
 		}
-
 		return null;
 
 	}
 
 	/*
-	 * parse the where conditions and display the propertyName, propertyValue and
-	 * conditionalOperator for each conditions
+	 * parse the where conditions and display the propertyName, propertyValue
+	 * and conditionalOperator for each conditions
 	 */
 	public String[] getConditions(String queryString) {
 
 		String conditionsPartQuery = getConditionsPartQuery(queryString);
 		if (conditionsPartQuery != null) {
 			String[] conditions = conditionsPartQuery.trim().split("\\s+and\\s+|\\s+or\\s+");
+			for (String condition : conditions)
+				System.out.println(condition);
 			return conditions;
 		}
 		return null;
@@ -90,7 +97,6 @@ public class DataMunger {
 
 		/* code review: incomplete code */
 		if (conditionsPartQuery != null) {
-
 			return null;
 		}
 		return null;
@@ -101,6 +107,8 @@ public class DataMunger {
 	public String[] getFields(String queryString) {
 
 		String[] fields = queryString.split("select")[1].trim().split("from")[0].split("[\\s,]+");
+		for (String field : fields)
+			System.out.println(field);
 		return fields;
 
 	}
@@ -110,9 +118,13 @@ public class DataMunger {
 
 		if (queryString.contains("order by")) {
 			String[] orderByFields = queryString.split("order by")[1].trim().split("\\s");
+			for (String field : orderByFields)
+				System.out.println(field);
+			/* if orderby is present return orderby fields */
 			return orderByFields;
 		}
 		/* code review: why is it still returning null? */
+		/* Answer:---> if order by clause is not present then it returns null */
 		return null;
 	}
 
@@ -121,9 +133,13 @@ public class DataMunger {
 
 		if (queryString.contains("group by")) {
 			String[] groupByFields = queryString.split("order by")[0].split("group by")[1].trim().split("\\s");
+			for (String field : groupByFields)
+				System.out.println(field);
+			/* if group by is present return group by fields */
 			return groupByFields;
 		}
 		/* code review: why is it still returning null? */
+		/* Answer:---> if group by clause is not present then it returns null */
 		return null;
 	}
 
