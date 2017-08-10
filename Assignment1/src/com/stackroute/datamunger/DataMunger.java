@@ -18,6 +18,10 @@ public class DataMunger {
 
 	public void parseQuery(String queryString) {
 		// call the methods
+		/*
+		 * Code review: as per the problem statement, it should print the values, but none of these
+		 * methods are printing anything
+		 */
 		getSplitStrings(queryString);
 		getFile(queryString);
 		getBaseQuery(queryString);
@@ -65,8 +69,8 @@ public class DataMunger {
 	}
 
 	/*
-	 * parse the where conditions and display the propertyName, propertyValue
-	 * and conditionalOperator for each conditions
+	 * parse the where conditions and display the propertyName, propertyValue and
+	 * conditionalOperator for each conditions
 	 */
 	public String[] getConditions(String queryString) {
 
@@ -83,8 +87,10 @@ public class DataMunger {
 
 		String conditionsPartQuery = getConditionsPartQuery(queryString);
 		String[] logicalOperators = null;
+
+		/* code review: incomplete code */
 		if (conditionsPartQuery != null) {
-			
+
 			return null;
 		}
 		return null;
@@ -106,6 +112,7 @@ public class DataMunger {
 			String[] orderByFields = queryString.split("order by")[1].trim().split("\\s");
 			return orderByFields;
 		}
+		/* code review: why is it still returning null? */
 		return null;
 	}
 
@@ -116,10 +123,12 @@ public class DataMunger {
 			String[] groupByFields = queryString.split("order by")[0].split("group by")[1].trim().split("\\s");
 			return groupByFields;
 		}
+		/* code review: why is it still returning null? */
 		return null;
 	}
 
 	// parse and display aggregate functions(if applicable)
+	/* Code Review: why is it not completed? */
 	public String[] getAggregateFunctions(String queryString) {
 
 		return null;
