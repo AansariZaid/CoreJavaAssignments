@@ -147,7 +147,14 @@ public class DataMunger {
 	/* Code Review: why is it not completed? */
 	public String[] getAggregateFunctions(String queryString) {
 
-		return null;
+		String selectColumnString = queryString.split("from")[0].split("select")[1].trim();
+
+		String[] aggregateFunctions = selectColumnString.split("[\\s+(\\s+|\\s+),\\s+]+");
+
+		for (String ag : aggregateFunctions)
+			System.out.println(ag);
+
+		return aggregateFunctions;
 	}
 
 }
