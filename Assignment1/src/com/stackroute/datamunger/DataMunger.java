@@ -1,5 +1,7 @@
 package com.stackroute.datamunger;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class DataMunger {
@@ -56,7 +58,7 @@ public class DataMunger {
 	// getting the baseQuery and display
 	public String getBaseQuery(String queryString) {
 
-		String baseQuery = queryString.split("where")[0];
+		String baseQuery = queryString.split("order by")[0].split("group by")[0].split("where")[0];
 		return baseQuery;
 
 	}
@@ -92,15 +94,31 @@ public class DataMunger {
 	// get the logical operators(applicable only if multiple conditions exist)
 	public String[] getLogicalOperators(String queryString) {
 
-		String conditionsPartQuery = getConditionsPartQuery(queryString);
-		String[] logicalOperators = null;
-
-		/* code review: incomplete code */
-		if (conditionsPartQuery != null) {
+		// convert the query to lower case
+		queryString = queryString.toLowerCase();
+		String whereClause = null;
+		// check whether where exist or not
+		if (queryString.contains("where")) {
+			// split it on the basis of where
+			whereClause = queryString.split("where")[1].trim().split("group by")[0].trim().split("order by")[0].trim();
+			// split where clause on the basis of and | or
+			String[] logicalOperators = whereClause.split("\\s+and\\s+|\\s+or\\s+");
+			// create an object of array list
+			List<String> logicalOperatorsList = new ArrayList<>();
+			// traverse over the array which is being split on the basis of and | or
+			int x = 0;
+			for (String expression : logicalOperators) {
+				if (x++ < logicalOperators.length - 1) {
+					// fetch the element and put it in the list
+					logicalOperatorsList.add(whereClause.split(expression.trim())[1].split("\\s+")[1].trim());
+				}
+			}
+			String[] operators = new String[logicalOperatorsList.size()];
+			operators = logicalOperatorsList.toArray(operators);
+			return operators;
+		} else {
 			return null;
 		}
-		return null;
-
 	}
 
 	/* get the fields from the select clause */
@@ -146,14 +164,10 @@ public class DataMunger {
 	// parse and display aggregate functions(if applicable)
 	/* Code Review: why is it not completed? */
 	public String[] getAggregateFunctions(String queryString) {
-
 		String selectColumnString = queryString.split("from")[0].split("select")[1].trim();
-
 		String[] aggregateFunctions = selectColumnString.split("[\\s+(\\s+|\\s+),\\s+]+");
-
 		for (String ag : aggregateFunctions)
 			System.out.println(ag);
-
 		return aggregateFunctions;
 	}
 
