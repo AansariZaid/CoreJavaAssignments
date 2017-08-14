@@ -39,7 +39,7 @@ public class DataMunger {
 
 	// parse the queryString into words and display
 	public String[] getSplitStrings(String queryString) {
-
+		//try to avoid regex in this assignment as by this time, students will not know regex
 		String[] words = queryString.split("[\\s,]+");
 
 		for (String word : words)
@@ -49,7 +49,8 @@ public class DataMunger {
 
 	// get and display the filename
 	public String getFile(String queryString) {
-
+		//what happens if the query does not contain from keyword?
+		//avoid regex
 		String filename = queryString.split("from")[1].split("\\s+")[1];
 		System.out.println(filename);
 		return filename;
@@ -57,7 +58,7 @@ public class DataMunger {
 
 	// getting the baseQuery and display
 	public String getBaseQuery(String queryString) {
-
+		//this method is not printing anything
 		String baseQuery = queryString.split("order by")[0].split("group by")[0].split("where")[0];
 		return baseQuery;
 
@@ -65,7 +66,7 @@ public class DataMunger {
 
 	// get and display the where conditions part(if where condition exists)
 	public String getConditionsPartQuery(String queryString) {
-
+		//conditions part to contain everything apart from the base query including the order by and group by clause
 		if (queryString.contains("where")) {
 			String conditionsPartQuery = queryString.split("order by")[0].split("group by")[0].split("where")[1];
 			System.out.println(conditionsPartQuery);
@@ -83,6 +84,7 @@ public class DataMunger {
 
 		String conditionsPartQuery = getConditionsPartQuery(queryString);
 		if (conditionsPartQuery != null) {
+			//try to avoid regex
 			String[] conditions = conditionsPartQuery.trim().split("\\s+and\\s+|\\s+or\\s+");
 			for (String condition : conditions)
 				System.out.println(condition);
@@ -104,6 +106,7 @@ public class DataMunger {
 			// split where clause on the basis of and | or
 			String[] logicalOperators = whereClause.split("\\s+and\\s+|\\s+or\\s+");
 			// create an object of array list
+			//dont use collections in this example
 			List<String> logicalOperatorsList = new ArrayList<>();
 			// traverse over the array which is being split on the basis of and | or
 			int x = 0;
@@ -162,7 +165,7 @@ public class DataMunger {
 	}
 
 	// parse and display aggregate functions(if applicable)
-	/* Code Review: why is it not completed? */
+	/* Code Review: please check carefully what is required in the problem statement */
 	public String[] getAggregateFunctions(String queryString) {
 		String selectColumnString = queryString.split("from")[0].split("select")[1].trim();
 		String[] aggregateFunctions = selectColumnString.split("[\\s+(\\s+|\\s+),\\s+]+");
