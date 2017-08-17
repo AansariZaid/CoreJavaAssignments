@@ -41,7 +41,6 @@ public class DataMunger {
 	public String[] getSplitStrings(String queryString) {
 		//try to avoid regex in this assignment as by this time, students will not know regex
 		String[] words = queryString.split("[\\s,]+");
-
 		for (String word : words)
 			System.out.print(word + " | ");
 		return words;
